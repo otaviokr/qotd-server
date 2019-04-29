@@ -2,10 +2,21 @@
 
 This is just a fun project to create a QOTD (Quote of the Day) server that will provide quotes using the QOTD Protocol RFC-865 (https://tools.ietf.org/html/rfc865).
 
-It will get quotes from one of the inputs below, in this order:
+## About the quotes
 
-- A text defined in a properties file. The contents will be read, added to the database and sent via the protocol;
+### Algorithm
 
-- Fetch online a quote, send it via the protocol and save it in the database;
+The quotes comes from one of following sources:
 
-- Using randomly one of the quotes from the database.
+- If the database is not reachable...
+    - The only quote provided is the default value from properties file;
+- If connected to the database... 
+    - If the latest timestamp is...
+        - today's: serve a random quote;
+        - else: fetch quote online...
+            - if successful: save it and server it;
+            - else: serve a random quote.
+
+### Online source
+
+The quotes are fetched in a website that provides random quotes daily.
